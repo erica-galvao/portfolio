@@ -1,150 +1,30 @@
-# Portfolio
-Data Science Portfolio – Érica Galvão
-
-🔷 VIGIA-LITE 🚓
+🔷 Vigia-Lite 🚓
 Sistema Offline de Reconhecimento de Placas e Faces para Viaturas Inteligentes
 
-Sistema de apoio à atividade policial, baseado em Visão Computacional e Inteligência Artificial, projetado para operar totalmente offline em viaturas, com foco em portabilidade, autonomia operacional e integração futura com sistemas institucionais.
+Autora: Érica Galvão
+Área: Visão Computacional · Inteligência Artificial · Edge Computing
+Contexto: Segurança Pública · Piauí Gov Tech
+Status: MVP técnico-conceitual funcional
 
-# Vigia-Lite 🚓  
-Sistema leve e offline para reconhecimento de placas (ANPR) e rostos para uso em viaturas inteligentes.  
-O objetivo é criar um MVP funcional capaz de rodar em dispositivos de baixo custo (Raspberry Pi, Jetson Nano, notebooks modestos) — seguindo a filosofia de inovação frugal.
+📌 Visão Geral
 
----
+O Vigia-Lite é um sistema de apoio à atividade policial, baseado em Visão Computacional e Inteligência Artificial, projetado para operar totalmente offline em viaturas policiais.
 
-## 📌 Funcionalidades
-- Detecção em tempo real de veículos e placas.
-- OCR para placas brasileiras (Mercosul e padrão antigo).
-- Detecção e reconhecimento facial offline.
-- Banco local SQLite com lista de interesse (placas e rostos).
-- Dashboard leve para visualizar alertas e ocorrências.
-- Execução totalmente offline (com sincronização quando online).
+A solução foi concebida segundo a filosofia de inovação frugal, permitindo execução em dispositivos de baixo custo (Raspberry Pi, Jetson Nano ou notebooks embarcados), com foco em:
 
----
+Autonomia operacional
 
-## 🧠 Técnicas e Modelos Utilizados
-### Detecção
-- **YOLOv8n/YOLOv7-tiny** quantizados (INT8).
-- Exportação ONNX → ONNX Runtime / TensorRT.
+Baixa latência
 
-### OCR
-- **Tesseract OCR** com pipeline de limpeza + regex BR.
-- Alternativa: **CRNN quantizado**.
+Portabilidade
 
-### Reconhecimento facial
-- **MTCNN** (detecção facial).
-- **MobileFaceNet** / **FaceNet** para embeddings.
-- Busca: **FAISS** local.
+Integração futura com sistemas institucionais
 
-### Otimizações
-- Quantização INT8.
-- Podas estruturais.
-- Pipeline de inferência assíncrona.
+🏛 Contexto e Alinhamento Institucional
 
----
+O projeto está alinhado ao Projeto Vigia, conforme previsto no item 1.3, alínea “a”, do Edital Piauí Gov Tech, integrando-se às ações do programa Pacto pela Ordem.
 
-## 🏛 Arquitetura
-Camera → Pré-processamento → YOLO Detector →
-|--> OCR da placa → Match → Alerta
-|--> Face Embedding → FAISS → Alerta
-↓
-Logger (SQLite)
-↓
-Dashboard Flask/React
----
-
-## 🛠 Stack Tecnológico
-- Python 3.10+
-- OpenCV
-- ONNX Runtime / TensorRT
-- PyTorch (para treino)
-- Flask (API)
-- React (Dashboard)
-- SQLite / SQLAlchemy
-
----
-
-## 📁 Estrutura do Repositório
-vigia-lite/
-├─ backend/
-│ ├─ app.py
-│ ├─ detection/
-│ ├─ face/
-│ ├─ ocr/
-│ └─ models/
-├─ frontend/
-│ └─ react-app/
-├─ data/
-├─ notebooks/
-├─ scripts/
-└─ tests/
-
-
----
-
-## ▶️ Como Rodar
-### Backend
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r backend/requirements.txt
-python backend/app.py
-
-
-### Frontend
-cd frontend
-npm install
-npm start
-
-
-📊 Métricas
-
-AP50 (detecção)
-
-CER/WER (OCR)
-
-FAR/FRR (face recognition)
-
-FPS no hardware alvo
-
-Latência média por frame
-
-🧪 Snippet de Inferência
-detections = model.infer(frame)
-for d in detections:
-    if d['class'] == 'plate':
-        plate_img = crop(frame, d['bbox'])
-        text = ocr(plate_img)
-        if check_blacklist(text):
-            log_alert("plate", text)
-🚀 Roadmap
- Versão para Jetson Nano com TensorRT.
-
- Modo noturno com filtros adicionais.
-
- Suporte a OCR baseado em Deep Learning.
-
- Modo “Patrulha Virtual” com câmeras fixas.
-
-
-
-
-
-
-🔐 Segurança & LGPD
-
-Banco local criptografado.
-
-Logs rotacionados e anonimizados.
-
-Nenhum dado enviado para a nuvem.
-
-
-1. Contexto e Alinhamento Institucional
-
-O Vigia-Lite está alinhado ao Projeto Vigia, conforme previsto no item 1.3, alínea “a”, do Edital Piauí Gov Tech, integrando-se às ações do programa Pacto pela Ordem.
-
-A solução foi concebida para atuar como um módulo complementar em edge computing, permitindo que viaturas policiais realizem reconhecimento de placas e faces sem dependência de conectividade, cenário recorrente em:
+O Vigia-Lite atua como um módulo edge complementar, estendendo capacidades de inteligência diretamente para o campo, especialmente em cenários recorrentes no Estado do Piauí:
 
 Áreas periféricas
 
@@ -152,15 +32,15 @@ Zonas rurais
 
 Operações móveis
 
-Regiões com instabilidade de rede
+Regiões com conectividade limitada ou inexistente
 
-O projeto não substitui o SPIA, mas amplia sua capacidade operacional ao estender funcionalidades de inteligência para o campo.
+O sistema não substitui o SPIA, mas amplia sua atuação ao permitir coleta e análise local, com sincronização posterior quando houver conectividade.
 
-2. Objetivo Geral
+🎯 Objetivo Geral
 
-Desenvolver e validar um MVP funcional de sistema embarcado para viaturas policiais, capaz de executar reconhecimento automático de placas veiculares e faces humanas em tempo real, operando totalmente offline, com possibilidade de sincronização segura posterior com sistemas centrais da SSP-PI.
+Desenvolver e validar um MVP funcional de sistema embarcado para viaturas policiais, capaz de realizar reconhecimento automático de placas veiculares e faces humanas em tempo real, operando totalmente offline, com possibilidade de sincronização segura posterior com sistemas centrais da SSP-PI.
 
-3. Objetivos Específicos
+🎯 Objetivos Específicos
 
 Implementar Reconhecimento Automático de Placas (ANPR) offline, compatível com padrões brasileiros (Mercosul e anterior).
 
@@ -168,15 +48,13 @@ Realizar reconhecimento facial local, baseado em embeddings biométricos.
 
 Manter listas de interesse armazenadas em banco de dados local criptografado.
 
-Gerar alertas operacionais imediatos para apoio à decisão do policial em campo.
+Gerar alertas operacionais imediatos, apoiando a tomada de decisão do policial em campo.
 
-Assegurar conformidade com a LGPD e normas de sigilo da segurança pública.
+Garantir conformidade com a LGPD e normas de sigilo da segurança pública.
 
-4. Escopo Funcional
+🧩 Escopo Funcional (MVP)
 
-O MVP contempla as seguintes funcionalidades:
-
-Detecção automática de veículos, placas e faces por meio de visão computacional.
+Detecção automática de veículos, placas e faces por visão computacional.
 
 OCR otimizado para placas brasileiras, com validação por padrões formais.
 
@@ -184,125 +62,168 @@ Reconhecimento facial offline, sem uso de serviços em nuvem.
 
 Registro local de alertas e ocorrências.
 
-Operação contínua em ambiente offline, com sincronização opcional quando disponível.
+Operação contínua em ambiente offline.
 
-5. Limites do Escopo (MVP)
+Sincronização opcional quando houver conectividade.
 
-Não contempla, nesta fase, decisões automatizadas sem validação humana.
+Limites do Escopo
 
-Não realiza identificação civil ou cadastro biométrico amplo.
+Não realiza decisões automatizadas sem validação humana.
 
-Atua como apoio operacional, não como sistema decisório final.
-6. Arquitetura do Sistema (Visão Geral)
+Não contempla identificação civil ampla ou cadastro biométrico massivo.
 
-O Vigia-Lite adota uma arquitetura modular e orientada a edge computing, permitindo execução local, baixa latência e operação independente de conectividade externa.
+Atua como sistema de apoio operacional, não decisório final.
 
-A solução foi desenhada para facilitar:
+🏛 Arquitetura do Sistema
 
-Execução em hardware de baixo custo
+Arquitetura modular e orientada a edge computing, priorizando baixa latência e independência de conectividade.
 
-Evolução incremental
-
-Integração futura com sistemas institucionais
-
-Fluxo Arquitetural
 Câmera (USB / RTSP)
         ↓
 Pré-processamento de Imagem
-(resize, normalização, filtros)
         ↓
-Detecção por Visão Computacional
-(veículos, placas, faces)
+Detecção (Veículos / Placas / Faces)
         ↓
 ┌─────────────────────────────┐
-│                             │
-│  OCR de Placas              │
-│  - Leitura do texto         │
-│  - Validação de formato     │
-│                             │
-│  Reconhecimento Facial      │
-│  - Extração de embeddings   │
-│  - Comparação local         │
-│                             │
+│ OCR de Placas               │
+│ Reconhecimento Facial       │
 └──────────────┬──────────────┘
                ↓
 Validação com Listas de Interesse
 (Banco local criptografado)
                ↓
-Geração de Alerta Operacional
+Geração de Alertas
                ↓
-Registro Local de Eventos
+Registro Local
                ↓
 Sincronização Opcional
-(com sistemas centrais, quando online)
 
 Princípios Arquiteturais
 
-Offline-first: todo o pipeline funciona sem internet.
+Offline-first
 
-Edge computing: inferência executada localmente.
+Edge computing
 
-Baixa latência: resposta imediata ao operador.
+Baixa latência
 
-Modularidade: cada componente pode ser evoluído isoladamente.
+Modularidade
 
-Interoperabilidade: preparado para integração via API.
+Preparado para integração via API
 
-7. Stack Tecnológico
+🧠 Técnicas e Modelos Utilizados
+Detecção
 
-A stack foi selecionada priorizando estabilidade, portabilidade e compatibilidade com ambientes governamentais.
+YOLOv8n / YOLOv7-tiny (quantizados – INT8)
 
-Linguagem e Runtime
-
-Python 3.10+
-
-Visão Computacional e IA
-
-OpenCV — captura e pré-processamento de vídeo
-
-YOLO (versões leves) — detecção de veículos, placas e faces
-
-ONNX Runtime — inferência otimizada em edge devices
-
-FAISS — busca vetorial local (embeddings faciais)
+Exportação ONNX para inferência otimizada
 
 OCR
 
 Tesseract OCR
 
-Pipeline de pós-processamento e validação por padrões brasileiros
+Pipeline de limpeza + regex para padrão brasileiro
 
-Backend / API
+Alternativa prevista: CRNN quantizado
 
-Flask (ou FastAPI) — API local e serviços internos
+Reconhecimento Facial
 
-Banco de Dados
+MTCNN (detecção)
 
-SQLite
+MobileFaceNet / FaceNet (embeddings)
 
-Possibilidade de uso com criptografia (ex.: SQLCipher)
+FAISS para busca vetorial local
 
-Infraestrutura e DevOps
+Otimizações
 
-Docker (ambiente de desenvolvimento)
+Quantização INT8
+
+Podas estruturais
+
+Pipeline de inferência assíncrona
+
+🛠 Stack Tecnológico
+
+Python 3.10+
+
+OpenCV
+
+ONNX Runtime / TensorRT
+
+PyTorch (treinamento)
+
+Flask (API)
+
+React (Dashboard)
+
+SQLite / SQLAlchemy
+
+Docker (desenvolvimento)
 
 GitHub Actions (CI básico)
 
-Execução nativa em Linux
+📁 Estrutura do Repositório
+vigia-lite/
+├─ backend/
+│  ├─ app.py
+│  ├─ detection/
+│  ├─ face/
+│  ├─ ocr/
+│  └─ models/
+├─ frontend/
+│  └─ react-app/
+├─ data/
+├─ notebooks/
+├─ scripts/
+└─ tests/
 
-8. Considerações de Implantação
+▶️ Como Executar
+Backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -r backend/requirements.txt
+python backend/app.py
 
-Compatível com:
+Frontend
+cd frontend
+npm install
+npm start
 
-Notebooks embarcados em viaturas
+📊 Métricas de Avaliação
 
-Raspberry Pi
+AP50 (detecção)
 
-Jetson Nano (opcional, para maior desempenho)
+CER / WER (OCR)
 
-Não requer conexão com nuvem.
+FAR / FRR (reconhecimento facial)
 
-Pode operar com câmera dedicada ou stream RTSP.
+FPS no hardware alvo
 
-Escalável por replicação da solução em múltiplas viaturas.
+Latência média por frame
 
+🔐 Segurança da Informação & LGPD
+
+Processamento prioritariamente local.
+
+Banco de dados criptografado.
+
+Possibilidade de armazenamento apenas de embeddings.
+
+Logs rotacionados e anonimizados.
+
+Nenhum dado enviado para a nuvem.
+
+🚀 Roadmap
+
+Versão otimizada para Jetson Nano com TensorRT.
+
+Melhorias para cenários noturnos.
+
+OCR baseado em Deep Learning.
+
+Integração com câmeras fixas (“Patrulha Virtual”).
+
+Pilotos operacionais em ambiente real.
+
+⚖️ Observação Final
+
+Este repositório representa um MVP técnico-institucional, desenvolvido para demonstrar viabilidade, maturidade técnica e aderência ao edital, servindo como base para validação, evolução e eventual implantação institucional.
