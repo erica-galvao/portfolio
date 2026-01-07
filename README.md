@@ -6,6 +6,140 @@ Sistema Offline de Reconhecimento de Placas e Faces para Viaturas Inteligentes
 
 Sistema de apoio à atividade policial, baseado em Visão Computacional e Inteligência Artificial, projetado para operar totalmente offline em viaturas, com foco em portabilidade, autonomia operacional e integração futura com sistemas institucionais.
 
+# Vigia-Lite 🚓  
+Sistema leve e offline para reconhecimento de placas (ANPR) e rostos para uso em viaturas inteligentes.  
+O objetivo é criar um MVP funcional capaz de rodar em dispositivos de baixo custo (Raspberry Pi, Jetson Nano, notebooks modestos) — seguindo a filosofia de inovação frugal.
+
+---
+
+## 📌 Funcionalidades
+- Detecção em tempo real de veículos e placas.
+- OCR para placas brasileiras (Mercosul e padrão antigo).
+- Detecção e reconhecimento facial offline.
+- Banco local SQLite com lista de interesse (placas e rostos).
+- Dashboard leve para visualizar alertas e ocorrências.
+- Execução totalmente offline (com sincronização quando online).
+
+---
+
+## 🧠 Técnicas e Modelos Utilizados
+### Detecção
+- **YOLOv8n/YOLOv7-tiny** quantizados (INT8).
+- Exportação ONNX → ONNX Runtime / TensorRT.
+
+### OCR
+- **Tesseract OCR** com pipeline de limpeza + regex BR.
+- Alternativa: **CRNN quantizado**.
+
+### Reconhecimento facial
+- **MTCNN** (detecção facial).
+- **MobileFaceNet** / **FaceNet** para embeddings.
+- Busca: **FAISS** local.
+
+### Otimizações
+- Quantização INT8.
+- Podas estruturais.
+- Pipeline de inferência assíncrona.
+
+---
+
+## 🏛 Arquitetura
+Camera → Pré-processamento → YOLO Detector →
+|--> OCR da placa → Match → Alerta
+|--> Face Embedding → FAISS → Alerta
+↓
+Logger (SQLite)
+↓
+Dashboard Flask/React
+---
+
+## 🛠 Stack Tecnológico
+- Python 3.10+
+- OpenCV
+- ONNX Runtime / TensorRT
+- PyTorch (para treino)
+- Flask (API)
+- React (Dashboard)
+- SQLite / SQLAlchemy
+
+---
+
+## 📁 Estrutura do Repositório
+vigia-lite/
+├─ backend/
+│ ├─ app.py
+│ ├─ detection/
+│ ├─ face/
+│ ├─ ocr/
+│ └─ models/
+├─ frontend/
+│ └─ react-app/
+├─ data/
+├─ notebooks/
+├─ scripts/
+└─ tests/
+
+
+---
+
+## ▶️ Como Rodar
+### Backend
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r backend/requirements.txt
+python backend/app.py
+
+
+### Frontend
+cd frontend
+npm install
+npm start
+
+
+📊 Métricas
+
+AP50 (detecção)
+
+CER/WER (OCR)
+
+FAR/FRR (face recognition)
+
+FPS no hardware alvo
+
+Latência média por frame
+
+🧪 Snippet de Inferência
+detections = model.infer(frame)
+for d in detections:
+    if d['class'] == 'plate':
+        plate_img = crop(frame, d['bbox'])
+        text = ocr(plate_img)
+        if check_blacklist(text):
+            log_alert("plate", text)
+🚀 Roadmap
+ Versão para Jetson Nano com TensorRT.
+
+ Modo noturno com filtros adicionais.
+
+ Suporte a OCR baseado em Deep Learning.
+
+ Modo “Patrulha Virtual” com câmeras fixas.
+
+
+
+
+
+
+🔐 Segurança & LGPD
+
+Banco local criptografado.
+
+Logs rotacionados e anonimizados.
+
+Nenhum dado enviado para a nuvem.
+
+
 1. Contexto e Alinhamento Institucional
 
 O Vigia-Lite está alinhado ao Projeto Vigia, conforme previsto no item 1.3, alínea “a”, do Edital Piauí Gov Tech, integrando-se às ações do programa Pacto pela Ordem.
