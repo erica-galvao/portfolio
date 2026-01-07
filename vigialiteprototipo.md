@@ -1,4 +1,4 @@
-Não, desse projeto primeiro: # Portfolio
+# Portfolio
 Data Science Portfolio – Érica Galvão
 
 🔷 VIGIA-LITE 🚓
