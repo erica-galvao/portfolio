@@ -1,0 +1,33 @@
+# 🏈 NFL Predictive Pipeline: Intelligence & Analytics
+> **Status:** MVP (Produto Mínimo Viável) | **Foco:** Ciência de Dados & MLOps
+
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Scikit-Learn](https://img.shields.io/badge/ML-Scikit--Learn-orange.svg)](https://scikit-learn.org/)
+[![NLP-VADER](https://img.shields.io/badge/NLP-VADER-green.svg)](https://www.nltk.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## 📋 Sobre o Projeto
+Este repositório apresenta uma pipeline de Machine Learning ponta a ponta, desenvolvida para prever o desempenho dos **San Francisco 49ers**. O diferencial técnico reside na abordagem **multimodal**, combinando estatísticas esportivas tradicionais com análise de sentimento de notícias via **NLP**.
+
+### 💡 Ideias
+* **Temporalidade:** Assim como jogos de futebol, manchas criminais seguem padrões de sazonalidade e médias móveis.
+* **Sentimento Social:** A análise de manchetes simula o monitoramento de redes sociais para medir a percepção de insegurança.
+
+---
+
+## 🏗️ Arquitetura da Solução
+O projeto foi estruturado utilizando **Programação Orientada a Objetos (POO)** para garantir escalabilidade e separação de preocupações (Separation of Concerns).
+
+
+
+### Módulos Principais:
+1. **`NFLDataIngestion`**: Script de extração (Scraping) com limpeza de dados estruturados e tratamento de MultiIndex.
+2. **`SocialListening`**: Processamento de Linguagem Natural (NLTK/VADER) para extrair o "clima" em torno do time.
+3. **`FeatureEngineering`**: Criação de janelas móveis (Rolling Windows) para capturar o *momentum* da equipe.
+4. **`PredictiveModel`**: Classificador Random Forest treinado com métricas de validação rigorosas.
+5. **`ModelDeployment`**: Camada de persistência (`joblib`) e simulador de API para consumo em produção.
+
+---
+
+## 📊 Visualizações e Resultados
+O modelo gera dashboards interativos utilizando **Plotly**, permitindo uma análise profunda de correlação entre o investimento ofensivo (jardas) e o moral público (sentimento).
